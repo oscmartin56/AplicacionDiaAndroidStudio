@@ -60,8 +60,5 @@ dependencies {
     //Imports Inicio
     implementation("androidx.constraintlayout:constraintlayout-compose:1.0.1")
     implementation("androidx.collection:collection:1.4.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.8.4")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")}
+
 }
