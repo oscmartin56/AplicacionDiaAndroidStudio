@@ -27,7 +27,7 @@ fun MapScreen() {
         mutableStateOf(MapUiSettings(zoomControlsEnabled = true))
     }
     var properties by remember {
-        mutableStateOf(MapProperties(mapType = MapType.SATELLITE))
+        mutableStateOf(MapProperties(mapType = MapType.NORMAL))
     }
 
     GoogleMap(
