@@ -10,20 +10,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.dia.ui.theme.DiaTheme
 
-// --- COLORES CORPORATIVOS ---
+// Colores corporativos compartidos
 val DiaRed = Color(0xFFE50014)
 val DiaLightGray = Color(0xFFF7F7F7)
 val DiaDarkButton = Color(0xFF424242)
@@ -38,62 +35,45 @@ fun AppDiaReplicaFull() {
         Cupon(3, "25% dto.", "SKIP y MIMOSIN")
     )
 
-    Scaffold(
-        bottomBar = { BottomNavigationDia() }
-    ) { padding ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(DiaLightGray),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-            contentPadding = PaddingValues(vertical = 16.dp)
-        ) {
-            // 1. BARRA DE BÚSQUEDA SUPERIOR
-            item { TopSearchBar() }
-
-            // 2. BANNER BIENVENIDA
-            item { WelcomeBanner() }
-
-            // 3. TARJETA CLUB DIA (ROJA)
-            item { ClubDiaCard() }
-
-            // 4. MI MONEDERO
-            item { MonederoCard() }
-
-            // 5. BOTONES DE ACCIÓN (COMPRAR / FOLLETOS)
-            item {
+    // Solo el contenido, sin Scaffold propio
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(DiaLightGray),
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+        contentPadding = PaddingValues(vertical = 16.dp)
+    ) {
+        item { TopSearchBar() }
+        item { WelcomeBanner() }
+        item { ClubDiaCard() }
+        item { MonederoCard() }
+        item {
+            Row(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                BotonBlancoIcono("Comprar", DiaAccentOrange, Modifier.weight(1f))
+                BotonBlancoIcono("Folletos", DiaAccentBlue, Modifier.weight(1f))
+            }
+        }
+        item { GanaPremiosCard() }
+        item {
+            Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                 Row(
-                    modifier = Modifier.padding(horizontal = 16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    BotonBlancoIcono("Comprar", DiaAccentOrange, Modifier.weight(1f))
-                    BotonBlancoIcono("Folletos", DiaAccentBlue, Modifier.weight(1f))
+                    Text("Todos mis cupones (7)", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color(0xFF006064))
+                    Text("+ Añadir código de cupón", color = Color.Gray, fontSize = 11.sp)
                 }
             }
-
-            // 6. GANA PREMIOS
-            item { GanaPremiosCard() }
-
-            // 7. SECCIÓN CUPONES HORIZONTAL
-            item {
-                Column(modifier = Modifier.padding(horizontal = 16.dp)) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Text("Todos mis cupones (7)", fontWeight = FontWeight.Bold, fontSize = 15.sp, color = Color(0xFF006064))
-                        Text("+ Añadir código de cupón", color = Color.Gray, fontSize = 11.sp)
-                    }
-                }
-                LazyRow(
-                    contentPadding = PaddingValues(16.dp),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(cuponesList) { cupon ->
-                        CuponIndividualCard(cupon)
-                    }
+            LazyRow(
+                contentPadding = PaddingValues(16.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp)
+            ) {
+                items(cuponesList) { cupon ->
+                    CuponIndividualCard(cupon)
                 }
             }
         }
@@ -139,7 +119,7 @@ fun WelcomeBanner() {
             modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.Filled.AccountCircle, contentDescription = "Avatar", modifier = Modifier.size(45.dp), tint = Color.LightGray)
+            Icon(Icons.Filled.AccountCircle, null, modifier = Modifier.size(45.dp), tint = Color.LightGray)
             Text(
                 "Bienvenido a tu\nmejor Dia",
                 modifier = Modifier.padding(start = 12.dp).weight(1f),
@@ -147,7 +127,7 @@ fun WelcomeBanner() {
             )
             Button(
                 onClick = {}, colors = ButtonDefaults.buttonColors(containerColor = DiaDarkButton),
-                shape = RoundedCornerShape(8.dp), contentPadding = PaddingValues(horizontal = 16.dp)
+                shape = RoundedCornerShape(8.dp)
             ) {
                 Text("Identifícate", fontSize = 13.sp)
             }
@@ -164,21 +144,11 @@ fun ClubDiaCard() {
     ) {
         Row(modifier = Modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
             Column(modifier = Modifier.padding(start = 20.dp).weight(1f)) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text("CLUB", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                    Icon(Icons.Default.Lock, contentDescription = null, tint = DiaRed, modifier = Modifier.padding(start = 8.dp).size(16.dp).background(Color.White, CircleShape).padding(2.dp))
-                }
+                Text("CLUB", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
                 Text("Dia", color = Color.White, fontWeight = FontWeight.Black, fontSize = 42.sp, lineHeight = 44.sp)
                 Text("Cupones y descuentos", color = Color.White, fontSize = 12.sp)
             }
-            Column(
-                modifier = Modifier.padding(horizontal = 16.dp).fillMaxHeight(),
-                horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center
-            ) {
-                Text("¡Empieza a usarla ya!", color = Color.White, fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(8.dp))
-                Icon(Icons.Filled.SentimentVerySatisfied, contentDescription = "Mascot", tint=Color.Green, modifier = Modifier.size(40.dp))
-            }
+            Icon(Icons.Filled.SentimentVerySatisfied, null, tint=Color.Green, modifier = Modifier.padding(end=16.dp).size(50.dp))
         }
     }
 }
@@ -191,18 +161,13 @@ fun MonederoCard() {
         elevation = CardDefaults.cardElevation(1.dp)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Row(
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Top
-            ) {
-                Column(modifier = Modifier.weight(1f)) {
+            Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
+                Column {
                     Text("Mi monedero", fontWeight = FontWeight.Bold, fontSize = 16.sp)
-                    Text("Acumular ahorro es más fácil con Dia", fontSize = 12.sp, color = Color.Gray)
+                    Text("Acumular ahorro es fácil", fontSize = 12.sp, color = Color.Gray)
                 }
                 Text("0,00€", fontSize = 24.sp, fontWeight = FontWeight.Black)
             }
-            Spacer(modifier = Modifier.height(8.dp))
-            Box(modifier = Modifier.fillMaxWidth(0.4f).height(4.dp).clip(CircleShape).background(Color.Cyan.copy(alpha=0.5f)))
         }
     }
 }
@@ -216,11 +181,10 @@ fun GanaPremiosCard() {
     ) {
         Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Text("Gana premios con Dia", modifier = Modifier.weight(1f), fontWeight = FontWeight.Bold, fontSize = 16.sp)
-            Icon(Icons.Filled.CardGiftcard, contentDescription = "Gift", tint = DiaRed, modifier = Modifier.size(40.dp))
+            Icon(Icons.Filled.CardGiftcard, null, tint = DiaRed, modifier = Modifier.size(40.dp))
         }
     }
 }
-
 
 @Composable
 fun BotonBlancoIcono(texto: String, iconColor: Color, modifier: Modifier = Modifier) {
@@ -241,77 +205,19 @@ fun BotonBlancoIcono(texto: String, iconColor: Color, modifier: Modifier = Modif
 @Composable
 fun CuponIndividualCard(cupon: Cupon) {
     Card(
-        modifier = Modifier.width(155.dp).height(210.dp), shape = RoundedCornerShape(16.dp),
+        modifier = Modifier.width(155.dp).height(180.dp), shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(containerColor = Color.White), elevation = CardDefaults.cardElevation(2.dp)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
             if (cupon.estaBloqueado) {
                 Icon(
-                    imageVector = Icons.Default.Lock, contentDescription = null, tint = Color.White,
+                    imageVector = Icons.Default.Lock, null, tint = Color.White,
                     modifier = Modifier.size(22.dp).background(DiaRed, CircleShape).padding(4.dp)
                 )
             }
-            Spacer(modifier = Modifier.weight(1f)) // Espacio para la imagen del producto
-            Text(
-                text = cupon.porcentaje, color = DiaRed, fontWeight = FontWeight.Bold,
-                fontSize = 15.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth()
-            )
-            Text(
-                text = cupon.descripcion, fontSize = 11.sp, textAlign = TextAlign.Center,
-                lineHeight = 13.sp, modifier = Modifier.fillMaxWidth(), maxLines = 2
-            )
+            Spacer(modifier = Modifier.weight(1f))
+            Text(cupon.porcentaje, color = DiaRed, fontWeight = FontWeight.Bold, fontSize = 15.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth())
+            Text(cupon.descripcion, fontSize = 11.sp, textAlign = TextAlign.Center, modifier = Modifier.fillMaxWidth(), maxLines = 2)
         }
-    }
-}
-
-@Composable
-fun BottomNavigationDia() {
-    var selectedItem by remember { mutableStateOf(2) } // "Dia" is selected by default
-    val navItems = listOf(
-        "Comprar" to Icons.Default.Menu,
-        "Tiendas" to Icons.Default.LocationOn,
-        "Dia" to null, // Special case
-        "Club Dia" to Icons.Default.CreditCard,
-        "Mi cuenta" to Icons.Default.Person
-    )
-
-    NavigationBar(containerColor = Color.White) {
-        navItems.forEachIndexed { index, (label, icon) ->
-            val isSelected = selectedItem == index
-            if (label == "Dia") {
-                NavigationBarItem(
-                    selected = isSelected, onClick = { selectedItem = index },
-                    icon = {
-                        Box(
-                            modifier = Modifier.size(56.dp).background(DiaRed, RoundedCornerShape(16.dp)),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("Dia", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-                        }
-                    },
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-                )
-            } else {
-                NavigationBarItem(
-                    selected = isSelected, onClick = { selectedItem = index },
-                    icon = { Icon(icon as ImageVector, label) },
-                    label = { Text(label, fontSize = 10.sp) },
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = DiaDarkButton, selectedTextColor = DiaDarkButton,
-                        unselectedIconColor = Color.Gray, unselectedTextColor = Color.Gray,
-                        indicatorColor = Color.Transparent
-                    )
-                )
-            }
-        }
-    }
-}
-
-
-@Preview(showBackground = true, device = "spec:width=411dp,height=891dp")
-@Composable
-fun DefaultPreview() {
-    DiaTheme {
-        AppDiaReplicaFull()
     }
 }

@@ -12,8 +12,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DiaTheme {
-                AppDiaReplicaFull()
-                MapScreen()
+                // Aquí llamamos a nuestro sistema de navegación principal
+                AppNavegacionPrincipal()
             }
         }
     }
