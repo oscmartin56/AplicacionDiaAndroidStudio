@@ -62,7 +62,7 @@ fun AppNavegacionPrincipal() {
             startDestination = Screen.Inicio.route,
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable(Screen.Inicio.route) { AppDiaReplicaFull() }
+            composable(Screen.Inicio.route) { PaginaListado() }
             composable(Screen.Tiendas.route) { MapScreen() }
             composable(Screen.ClubDia.route) { ClubYCuponesScreen() }
             composable(Screen.MiCuenta.route) { paginaInicioSesion()}
