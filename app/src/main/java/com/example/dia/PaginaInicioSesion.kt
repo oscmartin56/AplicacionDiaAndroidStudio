@@ -62,9 +62,9 @@ import com.example.dia.DiaRed
 
 @Preview
 @Composable
-fun paginaInicio() {
+fun paginaInicioSesion() {
     Scaffold(
-        bottomBar = { BottomBar() },
+//        bottomBar = { BottomBar() },
         topBar = { TopBar() },
     ) { paddingValues ->
         Column(modifier = Modifier.padding(paddingValues)) {
@@ -74,39 +74,57 @@ fun paginaInicio() {
 }
 
 @Composable
-fun content(
+fun content() {
+    Box(modifier = Modifier.fillMaxSize()) {
 
-) {
-    Column(verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
-        ,modifier = Modifier
-            .padding(bottom = 230.dp)
-            .fillMaxSize(),
-
-    ) {
-        IdiomaSimple()
-        Text("Aún no te conocemos", fontSize = 32.sp, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 20.dp))
-        Image(
-            painter = painterResource(id = R.drawable.llama),
-            contentDescription = "Llama Dia",
+        Box(
             modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(56.dp)),
-            contentScale = ContentScale.Crop
-        )
-        Button(onClick = {  },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = DiaRed,
-            ), modifier = Modifier.padding(top = 30.dp) ) {
-            Text("Quiero ser del Club Dia", color = Color.White)
+                .fillMaxWidth()
+                .padding(16.dp),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            IdiomaSimple()
         }
-        Text(
-            text = "¿Ya lo eres? Inicia sesión",
-            color = Color.Blue,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 10.dp)
-        )
-    }
 
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 100.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Aún no te conocemos",
+                fontSize = 32.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 20.dp)
+            )
+
+            Image(
+                painter = painterResource(id = R.drawable.llama),
+                contentDescription = "Llama Dia",
+                modifier = Modifier
+                    .size(100.dp)
+                    .clip(RoundedCornerShape(56.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            Button(
+                onClick = { },
+                colors = ButtonDefaults.buttonColors(containerColor = DiaRed),
+                modifier = Modifier.padding(top = 30.dp)
+            ) {
+                Text("Quiero ser del Club Dia", color = Color.White)
+            }
+
+            Text(
+                text = "¿Ya lo eres? Inicia sesión",
+                color = Color.Blue,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 10.dp)
+            )
+        }
+    }
 }
 @Composable
 fun IdiomaSimple() {
@@ -120,7 +138,7 @@ fun IdiomaSimple() {
                 .padding(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(Icons.Default.Language, contentDescription = null, modifier = Modifier.size(20.dp))
+            Image(painter = painterResource(id = R.drawable.bandera), contentDescription = "bandera españa", modifier = Modifier.size(20.dp))
             Spacer(Modifier.width(8.dp))
             Text(text = seleccionado, fontWeight = FontWeight.Bold)
         }

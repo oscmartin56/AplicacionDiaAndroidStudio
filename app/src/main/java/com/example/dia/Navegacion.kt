@@ -65,11 +65,7 @@ fun AppNavegacionPrincipal() {
             composable(Screen.Inicio.route) { AppDiaReplicaFull() }
             composable(Screen.Tiendas.route) { MapScreen() }
             composable(Screen.ClubDia.route) { ClubYCuponesScreen() }
-            composable(Screen.MiCuenta.route) {
-                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Pantalla Mi Cuenta")
-                }
-            }
+            composable(Screen.MiCuenta.route) { paginaInicioSesion()}
             // El botón central también redirige a Inicio
             composable("inicio_dia") { AppDiaReplicaFull() }
         }

@@ -129,7 +129,6 @@ fun MapScreen() {
 
     Scaffold(
         topBar = { TopBar() },
-        bottomBar = { BottomNavigationDia() }
     ) { paddingValues ->
         Column(
             modifier = Modifier
