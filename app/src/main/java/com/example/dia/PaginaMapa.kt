@@ -62,7 +62,7 @@ fun MapScreen() {
         position = CameraPosition.fromLatLngZoom(posmapa, 13.5f)
     }
     var uiSettings by remember {
-        mutableStateOf(MapUiSettings(zoomControlsEnabled = true))
+        mutableStateOf(MapUiSettings(zoomControlsEnabled = false))
     }
     var properties by remember {
         mutableStateOf(MapProperties(mapType = MapType.NORMAL))
@@ -98,7 +98,7 @@ fun MapScreen() {
             value = name,
             onValueChange = { input ->
                 name = input
-                val encontrada = listaTiendas.find { it.nombre.equals(input, ignoreCase = true) }
+                val encontrada = listaTiendas.find { it.nombre.equals(input) }
                 if (encontrada != null) {
                     scope.launch {
                         cameraPositionState.animate(
@@ -128,6 +128,7 @@ fun MapScreen() {
     }
 
     Scaffold(
+
         topBar = { TopBar() },
         bottomBar = { BottomNavigationDia() }
     ) { paddingValues ->
