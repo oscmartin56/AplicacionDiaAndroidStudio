@@ -12,7 +12,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DiaTheme {
-                // Aquí llamamos a nuestro sistema de navegación principal
                 AppNavegacionPrincipal()
             }
         }

@@ -194,7 +194,7 @@ fun TopBar() {
 
 @Composable
 fun BottomBar() {
-    var selectedItem by remember { mutableStateOf(2) } // "Dia" is selected by default
+    var selectedItem by remember { mutableStateOf(2) }
     val navItems = listOf(
         "Comprar" to Icons.Default.Menu,
         "Tiendas" to Icons.Default.LocationOn,

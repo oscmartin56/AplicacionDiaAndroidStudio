@@ -100,15 +100,12 @@ fun ListadoCategorias() {
 
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         categorias.forEach { categoria ->
-            // 1. Creamos un estado de expansión para cada categoría
-            // Usamos un 'key' único para que Compose no se líe al hacer scroll
             val expandedState = mutableStateOf(false)
 
-            // 2. LA CABECERA STICKY
+            // LA CABECERA STICKY
             stickyHeader(key = categoria.nombre) {
                 var expandido by remember { expandedState }
 
-                // Llamamos a la cabecera (es importante el fondo blanco para que no se transparente)
                 FilaCabeceraSticky(
                     categoria = categoria,
                     isExpanded = expandido,
@@ -116,8 +113,6 @@ fun ListadoCategorias() {
                 )
             }
 
-            // 3. LOS PRODUCTOS (Solo aparecen si está expandido)
-            // Al estar fuera del stickyHeader, el título se quedará fijo arriba mientras bajas por ellos
             item {
                 var expandido by remember { expandedState }
                 if (expandido) {
@@ -134,7 +129,6 @@ fun ListadoCategorias() {
                         }
                     }
                 }
-                // El divisor lo ponemos aquí para que se mueva con la lista
                 HorizontalDivider(thickness = 0.5.dp, color = Color.LightGray)
             }
         }

@@ -1,6 +1,7 @@
 package com.example.dia
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -13,14 +14,13 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
-// Colores corporativos compartidos
+// Colores compartidos
 val DiaRed = Color(0xFFE50014)
 val DiaLightGray = Color(0xFFF7F7F7)
 val DiaDarkButton = Color(0xFF424242)
@@ -28,14 +28,13 @@ val DiaAccentBlue = Color(0xFFE0F7FA)
 val DiaAccentOrange = Color(0xFFFFEFE6)
 
 @Composable
-fun AppDiaReplicaFull() {
+fun AppDiaReplicaFull(navViewModel: NavViewModel) {
     val cuponesList = listOf(
         Cupon(1, "20% dto.", "Comprando 2 uds. de Leche..."),
         Cupon(2, "20% dto.", "COLACAO"),
         Cupon(3, "25% dto.", "SKIP y MIMOSIN")
     )
 
-    // Solo el contenido, sin Scaffold propio
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -73,7 +72,11 @@ fun AppDiaReplicaFull() {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 items(cuponesList) { cupon ->
-                    CuponIndividualCard(cupon)
+                    Box(modifier = Modifier.clickable {
+                        navViewModel.handleIntent(NavIntent.IrADetalle(cupon))
+                    }) {
+                        CuponIndividualCard(cupon)
+                    }
                 }
             }
         }
